@@ -16,3 +16,34 @@ class UserRegisterForm(UserCreationForm):
             # پروفایل را به صورت دستی ایجاد می‌کنیم
             Profile.objects.create(user=user)
         return user
+
+class FreelancerSignUpForm(UserCreationForm):
+    email = forms.EmailField(required=True)
+
+    class Meta:
+        model = User
+        fields = ['username', 'email', 'password1', 'password2']
+
+    def save(self, commit=True):
+        user = super().save(commit=False)
+        user.role = 'freelancer'
+        if commit:
+            user.save()
+            Profile.objects.create(user=user)  # ایجاد پروفایل خالی
+        return user
+
+
+class EmployerSignUpForm(UserCreationForm):
+    email = forms.EmailField(required=True)
+
+    class Meta:
+        model = User
+        fields = ['username', 'email', 'password1', 'password2']
+
+    def save(self, commit=True):
+        user = super().save(commit=False)
+        user.role = 'employer'
+        if commit:
+            user.save()
+            Profile.objects.create(user=user)
+        return user
