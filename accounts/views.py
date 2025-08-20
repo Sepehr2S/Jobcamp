@@ -1,52 +1,58 @@
 from django.shortcuts import render, redirect
-from django.http import HttpResponseForbidden
-from django.contrib.auth import login
+from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
-from .forms import UserRegisterForm, FreelancerSignUpForm, EmployerSignUpForm
+from django.contrib import messages
+from django.contrib.auth import get_user_model
+from .models import Profile
+from .forms import SignUpForm, CustomLoginForm
 
+User = get_user_model()
 
-def register(request):
+def signup_view(request):
     if request.method == 'POST':
-        form = UserRegisterForm(request.POST)
+        form = SignUpForm(request.POST)
         if form.is_valid():
-            form.save()
-            return redirect('login')  # بعداً مسیر لاگین رو درست می‌کنیم
+            user = form.save(commit=False)
+            role = form.cleaned_data['role']
+            user.role = role  # ذخیره نقش کاربر
+            user.save()
+            Profile.objects.create(user=user)
+            messages.success(request, "ثبت‌نام با موفقیت انجام شد. حالا می‌توانید وارد شوید.")
+            return redirect('login')
     else:
-        form = UserRegisterForm()
-    return render(request, 'accounts/register.html', {'form': form})
+        form = SignUpForm()
+    return render(request, 'accounts/signup.html', {'form': form})
 
 
-def freelancer_signup(request):
+def login_view(request):
     if request.method == 'POST':
-        form = FreelancerSignUpForm(request.POST)
+        form = CustomLoginForm(request, data=request.POST)
         if form.is_valid():
-            user = form.save()
-            login(request, user)
-            return redirect('freelancer_dashboard')  # بعداً این صفحه رو می‌سازیم
-    else:
-        form = FreelancerSignUpForm()
-    return render(request, 'accounts/signup.html', {'form': form, 'title': 'ثبت‌نام فریلنسر'})
+            username = form.cleaned_data['username']
+            password = form.cleaned_data['password']
+            role = form.cleaned_data['role']
 
-def employer_signup(request):
-    if request.method == 'POST':
-        form = EmployerSignUpForm(request.POST)
-        if form.is_valid():
-            user = form.save()
-            login(request, user)
-            return redirect('employer_dashboard')
+            user = authenticate(request, username=username, password=password)
+
+            if user is not None and user.role == role:
+                login(request, user)
+                messages.success(request, f"خوش آمدید {user.username} ({role})")
+                return redirect('dashboard')  # می‌تونی تغییر بدی به صفحه اصلی
+            else:
+                messages.error(request, "نام کاربری، رمز یا نقش اشتباه است.")
     else:
-        form = EmployerSignUpForm()
-    return render(request, 'accounts/signup.html', {'form': form, 'title': 'ثبت‌نام کارفرما'})
+        form = CustomLoginForm()
+    return render(request, 'accounts/login.html', {'form': form})
 
 
 @login_required
 def freelancer_dashboard(request):
     if request.user.role != 'freelancer':
-        return HttpResponseForbidden("شما اجازه دسترسی به این صفحه را ندارید.")
-    return render(request, 'candidate-profile-main.html')  # داشبورد کاربر (فریلنسر)
+        return redirect('home')
+    return render(request, 'candidate-profile-main.html')
 
 @login_required
 def employer_dashboard(request):
     if request.user.role != 'employer':
-        return HttpResponseForbidden("شما اجازه دسترسی به این صفحه را ندارید.")
-    return render(request, 'dashboard-main.html')  # داشبورد کارفرما
+        return redirect('home')
+    return render(request, 'dashboard-main.html')

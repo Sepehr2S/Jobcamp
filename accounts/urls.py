@@ -1,9 +1,10 @@
+# accounts/urls.py
 from django.urls import path
 from . import views
 
 urlpatterns = [
-    path('signup/freelancer/', views.freelancer_signup, name='freelancer_signup'),
-    path('signup/employer/', views.employer_signup, name='employer_signup'),
-    path('dashboard/freelancer/', views.freelancer_dashboard, name='freelancer_dashboard'),
-    path('dashboard/employer/', views.employer_dashboard, name='employer_dashboard'),
+    path('signup/', views.signup_view, name='signup'),
+    path('login/', views.login_view, name='login'),
+    path('freelancer-dashboard/', views.freelancer_dashboard, name='freelancer_dashboard'),
+    path('employer-dashboard/', views.employer_dashboard, name='employer_dashboard'),
 ]

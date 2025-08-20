@@ -1,49 +1,21 @@
 from django import forms
-from django.contrib.auth.forms import UserCreationForm
-from .models import User, Profile
+from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
+from django.contrib.auth import get_user_model
 
-class UserRegisterForm(UserCreationForm):
-    role = forms.ChoiceField(choices=User.ROLE_CHOICES)
+User = get_user_model()
 
-    class Meta:
-        model = User
-        fields = ['username', 'email', 'role', 'password1', 'password2']
+ROLE_CHOICES = [
+    ('freelancer', 'کارجو (Freelancer)'),
+    ('employer', 'کارفرما (Employer)'),
+]
 
-    def save(self, commit=True):
-        user = super().save(commit=False)
-        if commit:
-            user.save()
-            # پروفایل را به صورت دستی ایجاد می‌کنیم
-            Profile.objects.create(user=user)
-        return user
-
-class FreelancerSignUpForm(UserCreationForm):
-    email = forms.EmailField(required=True)
+class SignUpForm(UserCreationForm):
+    role = forms.ChoiceField(choices=ROLE_CHOICES, widget=forms.RadioSelect)
 
     class Meta:
         model = User
-        fields = ['username', 'email', 'password1', 'password2']
-
-    def save(self, commit=True):
-        user = super().save(commit=False)
-        user.role = 'freelancer'
-        if commit:
-            user.save()
-            Profile.objects.create(user=user)  # ایجاد پروفایل خالی
-        return user
+        fields = ('username', 'email', 'password1', 'password2', 'role')
 
 
-class EmployerSignUpForm(UserCreationForm):
-    email = forms.EmailField(required=True)
-
-    class Meta:
-        model = User
-        fields = ['username', 'email', 'password1', 'password2']
-
-    def save(self, commit=True):
-        user = super().save(commit=False)
-        user.role = 'employer'
-        if commit:
-            user.save()
-            Profile.objects.create(user=user)
-        return user
+class CustomLoginForm(AuthenticationForm):
+    role = forms.ChoiceField(choices=ROLE_CHOICES, widget=forms.RadioSelect)
