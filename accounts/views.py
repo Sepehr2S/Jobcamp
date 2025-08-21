@@ -3,6 +3,8 @@ from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.contrib.auth import get_user_model, logout
+from django.contrib.auth.views import PasswordChangeView
+from django.urls import reverse_lazy
 from .models import Profile
 from .forms import SignUpForm, CustomLoginForm, UserForm, ProfileForm
 
@@ -116,3 +118,7 @@ def logout_view(request):
     logout(request)
     messages.success(request, "شما با موفقیت از سیستم خارج شدید.")
     return redirect('login')
+
+
+class CustomPasswordChangeView(PasswordChangeView):
+    template_name = 'accounts/candidate-profile-main.html'
