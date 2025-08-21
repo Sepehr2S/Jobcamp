@@ -215,12 +215,21 @@
             </button>
           </div>
           <div class="header-btns header-btn-devider ml-auto pr-2 ml-lg-6 d-none d-xs-flex">
+            {% if user.is_authenticated %}
+            <a class="btn btn-transparent text-uppercase font-size-3 heading-default-color focus-reset" href="{% url "logout" %}">
+              خروج
+             </a>
+             <a class="btn btn-primary text-uppercase font-size-3" href="{% url "freelancer_dashboard" %}">
+              پروفایل
+              </a>
+            {% else %}
             <a class="btn btn-transparent text-uppercase font-size-3 heading-default-color focus-reset" href="{% url "login" %}">
              ورود
             </a>
             <a class="btn btn-primary text-uppercase font-size-3" href="{% url "signup" %}">
             ثبت نام
             </a>
+            {% endif %}
           </div>
           <!-- Mobile Menu Hamburger-->
           <button class="navbar-toggler btn-close-off-canvas  hamburger-icon border-0" type="button" data-toggle="collapse" data-target="#mobile-menu" aria-controls="mobile-menu" aria-expanded="false" aria-label="Toggle navigation">
