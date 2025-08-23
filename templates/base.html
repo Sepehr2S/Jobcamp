@@ -1,212 +1,52 @@
 {% load static %}
 <!DOCTYPE html>
-<html lang="en">
-
- <meta http-equiv="content-type" content="text/html;charset=UTF-8" /> 
+<html lang="fa" dir="rtl">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title> جاب کمپ - قالب کاریابی آنلاین </title>
-  <link rel="shortcut icon" href={% static "image/favicon.png" %} type="image/x-icon">
-  <!-- Bootstrap , fonts & icons  -->
-  <link rel="stylesheet" href={% static "css/bootstrap.css" %}>
-  <link rel="stylesheet" href={% static "fonts/icon-font/css/style.css" %}>
-  <link rel="stylesheet" href={% static "fonts/typography-font/typo.css" %}>
-  <link rel="stylesheet" href={% static "fonts/fontawesome-5/css/all.css" %}>
-  <!-- Plugin'stylesheets  -->
-  <!-- Vendor stylesheets  -->
-  <link rel="stylesheet" href={% static "css/main.css" %}>
+  <title>{% block title %}جاب کمپ - قالب کاریابی آنلاین{% endblock %}</title>
+  <link rel="shortcut icon" href="{% static 'image/favicon.png' %}" type="image/x-icon">
+  <!-- Bootstrap, fonts & icons -->
+  <link rel="stylesheet" href="{% static 'css/bootstrap.css' %}">
+  <link rel="stylesheet" href="{% static 'fonts/icon-font/css/style.css' %}">
+  <link rel="stylesheet" href="{% static 'fonts/typography-font/typo.css' %}">
+  <link rel="stylesheet" href="{% static 'fonts/fontawesome-5/css/all.css' %}">
   <!-- Custom stylesheet -->
+  <link rel="stylesheet" href="{% static 'css/main.css' %}">
 </head>
-
 <body>
-  <div class="site-wrapper overflow-hidden ">
-    <!-- Header start  -->
+  <div class="site-wrapper overflow-hidden">
     <!-- Header Area -->
     <header class="site-header site-header--menu-right bg-default py-7 py-lg-0 site-header--absolute site-header--sticky">
       <div class="container">
-        <nav class="navbar site-navbar offcanvas-active navbar-expand-lg  px-0 py-0">
-          <!-- Brand Logo-->
+        <nav class="navbar site-navbar offcanvas-active navbar-expand-lg px-0 py-0">
+          <!-- Brand Logo -->
           <div class="brand-logo">
-            <a href="index-2.html">
-              <!-- light version logo (logo must be black)-->
-              <img src={% static "image/logo-main-black.png" %} alt="" class="light-version-logo default-logo">
-              <!-- Dark version logo (logo must be White)-->
-              <img src={% static "image/logo-main-white.png" %} alt="" class="dark-version-logo">
+            <a href="{% url 'website:home' %}">
+              <img src="{% static 'image/logo-main-black.png' %}" alt="لوگوی جاب کمپ" class="light-version-logo default-logo">
+              <img src="{% static 'image/logo-main-white.png' %}" alt="لوگوی جاب کمپ" class="dark-version-logo">
             </a>
           </div>
           <div class="collapse navbar-collapse" id="mobile-menu">
             <div class="navbar-nav-wrapper">
               <ul class="navbar-nav main-menu">
-                <li class="nav-item dropdown active">
-                  <a class="nav-link dropdown-toggle gr-toggle-arrow" id="navbarDropdown" href="home-2.html#features" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">خانه<i class="icon icon-small-down"></i></a>
-                  <ul class="gr-menu-dropdown dropdown-menu" aria-labelledby="navbarDropdown">
-                    <li class="drop-menu-item">
-                      <a href="home-1.html">
-                       خانه اصلی 01
-                      </a>
-                    </li>
-                    <li class="drop-menu-item">
-                      <a href="home-2.html">
-                       خانه اصلی 02
-                      </a>
-                    </li>
-                    <li class="drop-menu-item">
-                      <a href="home-3.html">
-                       خانه اصلی 03
-                      </a>
-                    </li>
-                  </ul>
+                <li class="nav-item">
+                  <a class="nav-link" href="{% url 'website:home' %}">خانه</a>
                 </li>
                 <li class="nav-item dropdown">
-                  <a class="nav-link dropdown-toggle gr-toggle-arrow" id="navbarDropdown2" href="home-2.html#features" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">صفحه‌ها<i class="icon icon-small-down"></i></a>
+                  <a class="nav-link dropdown-toggle gr-toggle-arrow" id="navbarDropdown2" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">صفحه‌ها<i class="icon icon-small-down"></i></a>
                   <ul class="gr-menu-dropdown dropdown-menu" aria-labelledby="navbarDropdown2">
-                    <li class="drop-menu-item dropdown">
-                      <a class="dropdown-toggle gr-toggle-arrow" id="navbarDropdown242" href="home-2.html#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                       صفحات شغلی
-                        <i class="icon icon-small-down"></i>
-                      </a>
-                      <ul class="gr-menu-dropdown dropdown-menu dropdown-left" aria-labelledby="navbarDropdown242">
-                        <li class="drop-menu-item">
-                          <a href="search-grid.html">
-                          شغل گرید
-                          </a>
-                        </li>
-                        <li class="drop-menu-item">
-                          <a href="search-list-1.html">
-                            شغل لیست
-                          </a>
-                        </li>
-                        <li class="drop-menu-item">
-                          <a href="jobdetails.html">
-                        جزییات شغل
-                          </a>
-                        </li>
-                      </ul>
-                    </li>
-                    <li class="drop-menu-item dropdown">
-                      <a class="dropdown-toggle gr-toggle-arrow" id="navbarDropdown21" href="home-2.html#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        دشبرد
-                        <i class="icon icon-small-down"></i>
-                      </a>
-                      <ul class="gr-menu-dropdown dropdown-menu dropdown-left" aria-labelledby="navbarDropdown21">
-                        <li class="drop-menu-item">
-                          <a href="dashboard-main.html">
-                            صفحه اصلی دشبرد
-                          </a>
-                        </li>
-                        <li class="drop-menu-item">
-                          <a href="dashboard-settings.html">
-                            تنظیمات
-                          </a>
-                        </li>
-                        <li class="drop-menu-item">
-                          <a href="dashboard-posted-applicants.html">
-                            متقاضیان
-                          </a>
-                        </li>
-                        <li class="drop-menu-item">
-                          <a href="dashboard-posted-jobs.html">
-                          شغل‌های پست شده
-                          </a>
-                        </li>
-                      </ul>
-                    </li>
-                    <li class="drop-menu-item dropdown">
-                      <a class="dropdown-toggle gr-toggle-arrow" id="navbarDropdown25g" href="home-2.html#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        صفحات کارجو
-                        <i class="icon icon-small-down"></i>
-                      </a>
-                      <ul class="gr-menu-dropdown dropdown-menu dropdown-left" aria-labelledby="navbarDropdown25g">
-                        <li class="drop-menu-item">
-                          <a href="candidate-profile-main.html">
-                            پروفایل کارجو
-                          </a>
-                        </li>
-                        <li class="drop-menu-item">
-                          <a href="candidate-profile.html">
-                            پروفایل کارجو 02
-                          </a>
-                        </li>
-                      </ul>
-                    </li>
-                    <li class="drop-menu-item dropdown">
-                      <a class="dropdown-toggle gr-toggle-arrow" id="navbarDropdown242" href="home-2.html#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        صفحات جستجو
-                        <i class="icon icon-small-down"></i>
-                      </a>
-                      <ul class="gr-menu-dropdown dropdown-menu dropdown-left" aria-labelledby="navbarDropdown242">
-                        <li class="drop-menu-item">
-                          <a href="search-grid.html">
-                            جستجو گرید
-                          </a>
-                        </li>
-                        <li class="drop-menu-item">
-                          <a href="search-list-1.html">
-                            جستجو لیست 01
-                          </a>
-                        </li>
-                        <li class="drop-menu-item">
-                          <a href="search-list-2.html">
-                            جستجو لیست 02
-                          </a>
-                        </li>
-                      </ul>
+                    <li class="drop-menu-item">
+                      <a href="{% url 'accounts:employer_profile' %}">پروفایل شرکت</a>
                     </li>
                     <li class="drop-menu-item">
-                      <a href="company-profile.html">
-                       پروفایل شرکت
-                      </a>
-                    </li>
-                    <li class="drop-menu-item dropdown">
-                      <a class="dropdown-toggle gr-toggle-arrow" id="navbarDropdown242" href="home-2.html#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                      اکانت
-                        <i class="icon icon-small-down"></i>
-                      </a>
-                      <ul class="gr-menu-dropdown dropdown-menu dropdown-left" aria-labelledby="navbarDropdown242">
-                        <li class="drop-menu-item">
-                          <a href="{% url "login" %}" >
-                           ورود
-                          </a>
-                        </li>
-                        <li class="drop-menu-item">
-                          <a href="#" data-toggle="modal" data-target="#signup">
-                          ثبت نام
-                          </a>
-                        </li>
-                      </ul>
-                    </li>
-                    <li class="drop-menu-item dropdown">
-                      <a class="dropdown-toggle gr-toggle-arrow" id="navbarDropdown26" href="home-2.html#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        صفحات پایه
-                        <i class="icon icon-small-down"></i>
-                      </a>
-                      <ul class="gr-menu-dropdown dropdown-menu dropdown-left" aria-labelledby="navbarDropdown26">
-                        <li class="drop-menu-item">
-                          <a href="faq.html">
-                            پرسش و پاسخ
-                          </a>
-                        </li>
-                        <li class="drop-menu-item">
-                          <a href="error-404.html">
-                            404
-                          </a>
-                        </li>
-                        <li class="drop-menu-item">
-                          <a href="pricing-page.html">
-                          صفحه قیمت گذاری
-                          </a>
-                        </li>
-                        <li class="drop-menu-item">
-                          <a href="contact.html">ارتباط با ما</a>
-                        </li>
-                      </ul>
+                      <a href="{% url 'website:contact' %}">تماس با ما</a>
                     </li>
                   </ul>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link" href="home-2.html#">پشتیبانی</a>
+                  <a class="nav-link" href="{% url 'website:contact' %}">پشتیبانی</a>
                 </li>
               </ul>
             </div>
@@ -216,147 +56,94 @@
           </div>
           <div class="header-btns header-btn-devider ml-auto pr-2 ml-lg-6 d-none d-xs-flex">
             {% if user.is_authenticated %}
-            <a class="btn btn-transparent text-uppercase font-size-3 heading-default-color focus-reset" href="{% url "logout" %}">
-              خروج
-             </a>
-             <a class="btn btn-primary text-uppercase font-size-3" href="{% url "freelancer_dashboard" %}">
-              پروفایل
-              </a>
+              <a class="btn btn-transparent text-uppercase font-size-3 heading-default-color focus-reset" href="{% url 'accounts:logout' %}">خروج</a>
+              {% if user.role == 'freelancer' %}
+                <a class="btn btn-primary text-uppercase font-size-3" href="{% url 'accounts:freelancer_dashboard' %}">پروفایل </a>
+              {% elif user.role == 'employer' %}
+                <a class="btn btn-primary text-uppercase font-size-3" href="{% url 'accounts:employer_dashboard' %}">دشبورد کارفرما</a>
+              {% endif %}
             {% else %}
-            <a class="btn btn-transparent text-uppercase font-size-3 heading-default-color focus-reset" href="{% url "login" %}">
-             ورود
-            </a>
-            <a class="btn btn-primary text-uppercase font-size-3" href="{% url "signup" %}">
-            ثبت نام
-            </a>
+              <a class="btn btn-transparent text-uppercase font-size-3 heading-default-color focus-reset" href="{% url 'accounts:login' %}">ورود</a>
+              <a class="btn btn-primary text-uppercase font-size-3" href="{% url 'accounts:signup' %}">ثبت‌نام</a>
             {% endif %}
           </div>
-          <!-- Mobile Menu Hamburger-->
-          <button class="navbar-toggler btn-close-off-canvas  hamburger-icon border-0" type="button" data-toggle="collapse" data-target="#mobile-menu" aria-controls="mobile-menu" aria-expanded="false" aria-label="Toggle navigation">
-            <!-- <i class="icon icon-simple-remove icon-close"></i> -->
+          <!-- Mobile Menu Hamburger -->
+          <button class="navbar-toggler btn-close-off-canvas hamburger-icon border-0" type="button" data-toggle="collapse" data-target="#mobile-menu" aria-controls="mobile-menu" aria-expanded="false" aria-label="Toggle navigation">
             <span class="hamburger hamburger--squeeze js-hamburger">
-          <span class="hamburger-box">
-            <span class="hamburger-inner"></span>
-            </span>
+              <span class="hamburger-box">
+                <span class="hamburger-inner"></span>
+              </span>
             </span>
           </button>
-          <!--/.Mobile Menu Hamburger Ends-->
         </nav>
       </div>
     </header>
-    <!-- navbar- -->
-    
-    <!-- Header start end -->
-{% block content %}
+    <!-- Header End -->
 
+    <!-- Content -->
+    {% block content %}
+    {% endblock %}
 
-
-{% endblock  %}
-<!-- footer area function start -->
-    <!-- cta section -->
+    <!-- Footer Area -->
     <footer class="footer bg-ebony-clay dark-mode-texts">
-        <div class="container">
-          <!-- Cta section -->
-          <div class="pt-11 pt-lg-20 pb-13 pb-lg-20 border-bottom border-width-1 border-default-color-2">
-            <div class="row justify-content-center ">
-              <div class="col-xl-7 col-lg-12" data-aos="fade-right" data-aos-duration="800" data-aos-once="true">
-                <!-- cta-content start -->
-                <div class="pb-xl-0 pb-9 text-xl-left text-center">
-                  <h2 class="text-white font-size-8 mb-4">جامع ترین پورتال شغلی</h2>
-                  <p class="text-hit-gray font-size-5 mb-0">لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از و از طراحان گرافیک است.</p>
-                </div>
-                <!-- cta-content end -->
-              </div>
-              <div class="col-xl-5 col-lg-12" data-aos="fade-left" data-aos-duration="800" data-aos-once="true">
-                <!-- cta-btns start -->
-                <!-- cta-btns end -->
+      <div class="container">
+        <div class="pt-11 pt-lg-20 pb-13 pb-lg-20 border-bottom border-width-1 border-default-color-2">
+          <div class="row justify-content-center">
+            <div class="col-xl-7 col-lg-12" data-aos="fade-right" data-aos-duration="800" data-aos-once="true">
+              <div class="pb-xl-0 pb-9 text-xl-right text-center">
+                <h2 class="text-white font-size-8 mb-4">جامع‌ترین پورتال شغلی</h2>
+                <p class="text-hit-gray font-size-5 mb-0">لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از و از طراحان گرافیک است.</p>
               </div>
             </div>
+            <div class="col-xl-5 col-lg-12" data-aos="fade-left" data-aos-duration="800" data-aos-once="true"></div>
           </div>
         </div>
-        <div class="container  pt-12 pt-lg-19 pb-10 pb-lg-19">
+        <div class="container pt-12 pt-lg-19 pb-10 pb-lg-19">
           <div class="row">
             <div class="col-lg-4 col-sm-6 mb-lg-0 mb-9">
-              <!-- footer logo start -->
-              <img src={% static "image/logo-main-white.png" %} alt="" class="footer-logo mb-14">
-              <!-- footer logo End -->
-              <!-- media start -->
+              <img src="{% static 'image/logo-main-white.png' %}" alt="لوگوی جاب کمپ" class="footer-logo mb-14">
               <div class="media mb-11">
-                <img src={% static "image/l1/png/message.png" %} class="align-self-center mr-3" alt="">
+                <img src="{% static 'image/l1/png/message.png' %}" class="align-self-center mr-3" alt="">
                 <div class="media-body pl-5">
                   <p class="mb-0 font-size-4 text-white">ارتباط با ما</p>
                   <a class="mb-0 font-size-4 font-weight-bold" href="mailto:support@uxtheme.net">support@uxtheme.net</a>
                 </div>
               </div>
-              <!-- media start -->
-              <!-- widget social icon start -->
               <div class="social-icons">
-                <ul class="pl-0 list-unstyled d-flex align-items-end ">
-                  <li class="d-flex flex-column justify-content-center px-3 mr-3 font-size-4 heading-default-color"> ما را دنبال کنید در:</li>
-                  <li class="d-flex flex-column justify-content-center px-3 mr-3"><a href="home-1.html#" class="hover-color-primary heading-default-color"><i class="fab fa-facebook-f font-size-3 pt-2"></i></a></li>
-                  <li class="d-flex flex-column justify-content-center px-3 mr-3"><a href="home-1.html#" class="hover-color-primary heading-default-color"><i class="fab fa-twitter font-size-3 pt-2"></i></a></li>
-                  <li class="d-flex flex-column justify-content-center px-3 mr-3"><a href="home-1.html#" class="hover-color-primary heading-default-color"><i class="fab fa-linkedin-in font-size-3 pt-2"></i></a></li>
+                <ul class="pl-0 list-unstyled d-flex align-items-end">
+                  <li class="d-flex flex-column justify-content-center px-3 mr-3 font-size-4 heading-default-color">ما را دنبال کنید در:</li>
+                  <li class="d-flex flex-column justify-content-center px-3 mr-3"><a href="#" class="hover-color-primary heading-default-color"><i class="fab fa-facebook-f font-size-3 pt-2"></i></a></li>
+                  <li class="d-flex flex-column justify-content-center px-3 mr-3"><a href="#" class="hover-color-primary heading-default-color"><i class="fab fa-twitter font-size-3 pt-2"></i></a></li>
+                  <li class="d-flex flex-column justify-content-center px-3 mr-3"><a href="#" class="hover-color-primary heading-default-color"><i class="fab fa-linkedin-in font-size-3 pt-2"></i></a></li>
                 </ul>
               </div>
-              <!-- widget social icon end -->
             </div>
             <div class="col-lg-8 col-md-6">
               <div class="row">
                 <div class="col-lg-3 col-md-6 col-sm-3 col-xs-6">
                   <div class="footer-widget widget2 mb-md-0 mb-13">
-                    <!-- footer widget title start -->
                     <p class="widget-title font-size-4 text-gray mb-md-8 mb-7">شرکت</p>
-                    <!-- footer widget title end -->
-                    <!-- widget social menu start -->
                     <ul class="widget-links pl-0 list-unstyled list-hover-primary">
-                      <li class="mb-6"><a class="heading-default-color font-size-4 font-weight-normal" href="home-1.html#">درباره ما</a></li>
-                      <li class="mb-6"><a class="heading-default-color font-size-4 font-weight-normal" href="home-1.html#">تماس با ما</a></li>
-                      <li class="mb-6"><a class="heading-default-color font-size-4 font-weight-normal" href="home-1.html#">مشاغل </a></li>
-                      <li class="mb-6"><a class="heading-default-color font-size-4 font-weight-normal" href="home-1.html#">پرس</a></li>
+                      <li class="mb-6"><a class="heading-default-color font-size-4 font-weight-normal" href="{% url 'website:home' %}#about">درباره ما</a></li>
+                      <li class="mb-6"><a class="heading-default-color font-size-4 font-weight-normal" href="{% url 'website:contact' %}">تماس با ما</a></li>
                     </ul>
-                    <!-- widget social menu end -->
                   </div>
                 </div>
                 <div class="col-lg-3 col-md-6 col-sm-3 col-xs-6">
                   <div class="footer-widget widget3 mb-sm-0 mb-13">
-                    <!-- footer widget title start -->
-                    <p class="widget-title font-size-4 text-gray mb-md-8 mb-7">محصولات</p>
-                    <!-- footer widget title end -->
-                    <!-- widget social menu start -->
-                    <ul class="widget-links pl-0 list-unstyled list-hover-primary">
-                      <li class="mb-6"><a class="heading-default-color font-size-4 font-weight-normal" href="home-1.html#">جدیدترین</a></li>
-                      <li class="mb-6"><a class="heading-default-color font-size-4 font-weight-normal" href="home-1.html#">قیمت گذاری</a></li>
-                      <li class="mb-6"><a class="heading-default-color font-size-4 font-weight-normal" href="home-1.html#">اخبار</a></li>
-                      <li class="mb-6"><a class="heading-default-color font-size-4 font-weight-normal" href="home-1.html#">میز راهنما</a></li>
-                      <li class="mb-6"><a class="heading-default-color font-size-4 font-weight-normal" href="home-1.html#">پشتیبانی</a></li>
-                    </ul>
-                    <!-- widget social menu end -->
-                  </div>
-                </div>
-                <div class="col-lg-3 col-md-6 col-sm-3 col-xs-6">
-                  <div class="footer-widget widget4 mb-sm-0 mb-13">
-                    <!-- footer widget title start -->
                     <p class="widget-title font-size-4 text-gray mb-md-8 mb-7">خدمات</p>
-                    <!-- footer widget title end -->
-                    <!-- widget social menu start -->
                     <ul class="widget-links pl-0 list-unstyled list-hover-primary">
-                      <li class="mb-6"><a class="heading-default-color font-size-4 font-weight-normal" href="home-1.html#"> بازاریابی دیجیتال </a></li>
-                      <li class="mb-6"><a class="heading-default-color font-size-4 font-weight-normal" href="home-1.html#"> سئو برای تجارت </a></li>
-                      <li class="mb-6"><a class="heading-default-color font-size-4 font-weight-normal" href="home-1.html#"> کشف داش </a></li>
-                      <li class="mb-6"><a class="heading-default-color font-size-4 font-weight-normal" href="home-1.html#"> رابط کاربری </a></li>
+                      <li class="mb-6"><a class="heading-default-color font-size-4 font-weight-normal" href="{% url 'website:home' %}#services">جستجوی شغل</a></li>
+                      <li class="mb-6"><a class="heading-default-color font-size-4 font-weight-normal" href="{% url 'website:home' %}#services">پست شغل</a></li>
                     </ul>
-                    <!-- widget social menu end -->
                   </div>
                 </div>
                 <div class="col-lg-3 col-md-6 col-sm-3 col-xs-6">
                   <div class="footer-widget widget4">
-                    <!-- footer widget title start -->
                     <p class="widget-title font-size-4 text-gray mb-md-8 mb-7">حقوقی</p>
-                    <!-- footer widget title end -->
                     <ul class="widget-links pl-0 list-unstyled list-hover-primary">
-                      <li class="mb-6"><a class="heading-default-color font-size-4 font-weight-normal" href="home-1.html#"> سیاست حفظ حریم خصوصی </a></li>
-                      <li class="mb-6"><a class="heading-default-color font-size-4 font-weight-normal" href="home-1.html#"> قوانین و مقررات  </a></li>
-                      <li class="mb-6"><a class="heading-default-color font-size-4 font-weight-normal" href="home-1.html#"> خط مشی برگشت </a></li>
+                      <li class="mb-6"><a class="heading-default-color font-size-4 font-weight-normal" href="{% url 'website:home' %}#privacy">سیاست حفظ حریم خصوصی</a></li>
+                      <li class="mb-6"><a class="heading-default-color font-size-4 font-weight-normal" href="{% url 'website:home' %}#terms">قوانین و مقررات</a></li>
                     </ul>
                   </div>
                 </div>
@@ -364,15 +151,12 @@
             </div>
           </div>
         </div>
-      </footer>
-      <!-- footer area function end -->
-    </div>
-    <!-- Vendor Scripts -->
-    <script src={% static "js/vendor.min.js" %}></script>
-    <!-- Plugin's Scripts -->
-    <!-- Activation Script -->
-    <!-- <script src="js/drag-n-drop.js"></script> -->
-    <script src={% static "js/custom.js" %}></script>
-  </body>
-  
-  </html>
+      </div>
+    </footer>
+    <!-- Footer End -->
+  </div>
+  <!-- Vendor Scripts -->
+  <script src="{% static 'js/vendor.min.js' %}"></script>
+  <script src="{% static 'js/custom.js' %}"></script>
+</body>
+</html>

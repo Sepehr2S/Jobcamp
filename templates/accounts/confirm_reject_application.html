@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container">
+    <h2>رد درخواست</h2>
+    <p>آیا مطمئن هستید که می‌خواهید درخواست "{{ application.applicant.username }}" برای "{{ application.job.title }}" را رد کنید؟</p>
+    <form method="post">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-danger">رد کردن</button>
+        <a href="{% url 'employer_dashboard' %}" class="btn btn-secondary">لغو</a>
+    </form>
+</div>
+{% endblock %}

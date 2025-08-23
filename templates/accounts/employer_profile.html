@@ -1,0 +1,121 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}پروفایل شرکت - جاب کمپ{% endblock %}
+{% block content %}
+<div class="container-fluid" style="direction: rtl;">
+    <div class="row">
+        <!-- سایدبار -->
+        <div class="col-lg-3 col-md-4 d-md-block d-none">
+            <div class="dashboard-sidebar-wrapper pt-11 position-sticky top-0" id="sidebar">
+                <div class="brand-logo px-11">
+                    {% if profile.logo %}
+                        <a href="{% url 'website:home' %}">
+                            <img src="{{ profile.logo.url }}" alt="{{ profile.company_name }}" class="img-fluid">
+                        </a>
+                    {% else %}
+                        <a href="{% url 'website:home' %}">
+                            <img src="{% static 'image/logo-main-black.png' %}" alt="لوگوی جاب کمپ" class="img-fluid">
+                        </a>
+                    {% endif %}
+                </div>
+                <div class="my-15 px-11">
+                    <a href="{% url 'accounts:post_job' %}" class="btn btn-primary btn-xl w-100 text-uppercase"><span class="ml-5 d-inline-block">+</span>ارسال شغل جدید</a>
+                </div>
+                <ul class="list-unstyled dashboard-layout-sidebar">
+                    <li><a href="{% url 'accounts:employer_dashboard' %}" class="px-10 py-1 my-5 font-size-4 font-weight-semibold flex-y-center"><i class="icon icon-layout-11 ml-7"></i>دشبورد</a></li>
+                    <li><a href="{% url 'accounts:employer_profile' %}" class="px-10 py-1 my-5 font-size-4 font-weight-semibold flex-y-center active"><i class="icon icon-layout-11 ml-7"></i>پروفایل شرکت</a></li>
+                    <li><a href="{% url 'accounts:edit_employer_profile' %}" class="px-10 py-1 my-5 font-size-4 font-weight-semibold flex-y-center"><i class="fas fa-cog ml-7"></i>ویرایش پروفایل</a></li>
+                </ul>
+            </div>
+        </div>
+        <!-- محتوای اصلی -->
+        <div class="col-lg-9 col-md-8">
+            <div class="bg-default-2 pt-16 pt-lg-22 pb-13 pb-lg-27">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="bg-white rounded-4 pt-11 shadow-9">
+                                <!-- پروفایل شرکت -->
+                                <div class="d-xs-flex align-items-center pl-xs-12 mb-8 text-center text-xs-right">
+                                    {% if profile.logo %}
+                                        <img class="square-72 rounded-6 ml-xs-7 mb-5 mb-xs-0" src="{{ profile.logo.url }}" alt="{{ profile.company_name }}">
+                                    {% else %}
+                                        <img class="square-72 rounded-6 ml-xs-7 mb-5 mb-xs-0" src="{% static 'image/l2/png/featured-job-logo-1.png' %}" alt="لوگوی پیش‌فرض">
+                                    {% endif %}
+                                    <div>
+                                        <h2 class="mt-xs-n5 font-size-6 text-black-2 font-weight-semibold">{{ profile.company_name|default:"بدون نام" }}</h2>
+                                    </div>
+                                </div>
+                                <!-- Tab Section Start -->
+                                <ul class="nav border-bottom border-mercury pl-12" id="myTab" role="tablist">
+                                    <li class="tab-menu-items nav-item pr-12">
+                                        <a class="active text-uppercase font-size-3 font-weight-bold text-default-color py-3" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">شرکت</a>
+                                    </li>
+                                </ul>
+                                <!-- Tab Content -->
+                                <div class="tab-content pl-12 pt-10 pb-7 pr-12 pr-xxl-24" id="myTabContent">
+                                    <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                                        <!-- Middle Body Start -->
+                                        <div class="row">
+                                            <!-- Single Widgets Start -->
+                                            <div class="col-12 col-lg-4 col-md-4 col-xs-6">
+                                                <div class="mb-8">
+                                                    <p class="font-size-4">اندازه شرکت</p>
+                                                    <h5 class="font-size-4 font-weight-semibold text-black-2">{{ profile.company_size|default:"نامشخص" }}</h5>
+                                                </div>
+                                                <div class="mb-8">
+                                                    <p class="font-size-4">تاریخ تأسیس</p>
+                                                    <h5 class="font-size-4 font-weight-semibold text-black-2">{{ profile.founded_date|default:"نامشخص" }}</h5>
+                                                </div>
+                                            </div>
+                                            <!-- Single Widgets End -->
+                                            <!-- Single Widgets Start -->
+                                            <div class="col-12 col-lg-4 col-md-4 col-xs-6">
+                                                <div class="mb-8">
+                                                    <p class="font-size-4">نوع شرکت</p>
+                                                    <h5 class="font-size-4 font-weight-semibold text-black-2">{{ profile.company_type|default:"نامشخص" }}</h5>
+                                                </div>
+                                                <div class="mb-8">
+                                                    <p class="font-size-4">وب‌سایت</p>
+                                                    <h5 class="font-size-4 font-weight-semibold text-black-2">
+                                                        {% if profile.website %}
+                                                            <a href="{{ profile.website }}" target="_blank">{{ profile.website }}</a>
+                                                        {% else %}
+                                                            نامشخص
+                                                        {% endif %}
+                                                    </h5>
+                                                </div>
+                                            </div>
+                                            <!-- Single Widgets End -->
+                                            <!-- Single Widgets Start -->
+                                            <div class="col-12 col-lg-4 col-md-4 col-xs-6">
+                                                <div class="mb-8">
+                                                    <p class="font-size-4">محل</p>
+                                                    <h5 class="font-size-4 font-weight-semibold text-black-2">{{ profile.location|default:"نامشخص" }}</h5>
+                                                </div>
+                                                <div class="mb-8">
+                                                    <p class="font-size-4">تلفن</p>
+                                                    <h5 class="font-size-4 font-weight-semibold text-black-2">{{ profile.phone|default:"نامشخص" }}</h5>
+                                                </div>
+                                            </div>
+                                            <!-- Single Widgets End -->
+                                        </div>
+                                        <!-- Middle Body End -->
+                                        <!-- Excerpt Start -->
+                                        <h4 class="font-size-6 mb-7 text-black-2 font-weight-semibold">درباره {{ profile.company_name|default:"شرکت" }}</h4>
+                                        <div class="pt-5">
+                                            <p class="font-size-4 mb-8">{{ profile.description|default:"بدون توضیحات" }}</p>
+                                        </div>
+                                        <!-- Excerpt End -->
+                                    </div>
+                                </div>
+                                <!-- Tab Content End -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

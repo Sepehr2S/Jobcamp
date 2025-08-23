@@ -1,0 +1,87 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+<div class="dashboard-sidebar-wrapper pt-11" id="sidebar">
+    <!-- کپی سایدبار از employer_dashboard.html -->
+    <div class="brand-logo px-11">
+        {% if profile.logo %}
+            <a href="{% url 'website:home' %}">
+                <img src="{{ profile.logo.url }}" alt="{{ profile.company_name }}">
+            </a>
+        {% else %}
+            <a href="{% url 'website:home' %}">
+                <img src="{% static 'image/logo-main-black.png' %}" alt="">
+            </a>
+        {% endif %}
+    </div>
+    <div class="my-15 px-11">
+        <a href="{% url 'post_job' %}" class="btn btn-primary btn-xl w-100 text-uppercase"><span class="mr-5 d-inline-block">+</span>ارسال شغل جدید</a>
+    </div>
+    <ul class="list-unstyled dashboard-layout-sidebar">
+        <li><a href="{% url 'employer_dashboard' %}" class="px-10 py-1 my-5 font-size-4 font-weight-semibold flex-y-center"><i class="icon icon-layout-11 mr-7"></i>دشبرد</a></li>
+        <li class="active"><a href="{% url 'posted_jobs' %}" class="px-10 py-1 my-5 font-size-4 font-weight-semibold flex-y-center"><i class="fas fa-briefcase mr-7"></i>شغل پست شده</a></li>
+        <li><a href="{% url 'posted_applicants' %}" class="px-10 py-1 my-5 font-size-4 font-weight-semibold flex-y-center"><i class="fas fa-user mr-7"></i>درخواست‌ها<span class="ml-auto px-1 h-1 bg-dodger text-white font-size-3 rounded-5 max-height-px-18 flex-all-center">{{ applications.count }}</span></a></li>
+        <li><a href="{% url 'employer_settings' %}" class="px-10 py-1 my-5 font-size-4 font-weight-semibold flex-y-center"><i class="fas fa-cog mr-7"></i>تنظیمات</a></li>
+    </ul>
+</div>
+<a class="sidebar-mobile-button" data-toggle="collapse" href="#sidebar" role="button" aria-expanded="false" aria-controls="sidebar">
+    <i class="icon icon-sidebar-2"></i>
+</a>
+<div class="dashboard-main-container mt-25 mt-lg-31" id="dashboard-body">
+    <div class="mb-18">
+        <div class="row mb-11 align-items-center">
+            <div class="col-lg-6 mb-lg-0 mb-4">
+                <h3 class="font-size-6 mb-0">مشاغل پست‌شده ({{ jobs.count }})</h3>
+            </div>
+        </div>
+        <div class="bg-white shadow-8 pt-7 rounded pb-9 px-11">
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th scope="col" class="pl-0 border-0 font-size-4 font-weight-normal">نام</th>
+                            <th scope="col" class="pl-4 border-0 font-size-4 font-weight-normal">عنوان شغلی</th>
+                            <th scope="col" class="pl-4 border-0 font-size-4 font-weight-normal">شهر</th>
+                            <th scope="col" class="pl-4 border-0 font-size-4 font-weight-normal">تاریخ ایجاد</th>
+                            <th scope="col" class="pl-4 border-0 font-size-4 font-weight-normal">درخواست‌ها</th>
+                            <th scope="col" class="pl-4 border-0 font-size-4 font-weight-normal"></th>
+                            <th scope="col" class="pl-4 border-0 font-size-4 font-weight-normal"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for job in jobs %}
+                        <tr class="border border-color-2">
+                            <th scope="row" class="pl-6 border-0 py-7 min-width-px-235">
+                                <div>
+                                    <a href="{% url 'job_detail' job.id %}" class="font-size-4 mb-0 font-weight-semibold text-black-2">{{ job.title }}</a>
+                                </div>
+                            </th>
+                            <td class="table-y-middle py-7 min-width-px-135">
+                                <h3 class="font-size-4 font-weight-normal text-black-2 mb-0">{{ job.get_job_type_display }}</h3>
+                            </td>
+                            <td class="table-y-middle py-7 min-width-px-125">
+                                <h3 class="font-size-4 font-weight-normal text-black-2 mb-0">{{ job.location|default:"ریموت" }}</h3>
+                            </td>
+                            <td class="table-y-middle py-7 min-width-px-155">
+                                <h3 class="font-size-4 font-weight-normal text-black-2 mb-0">{{ job.created_at|date:"d F, Y" }}</h3>
+                            </td>
+                            <td class="table-y-middle py-7 min-width-px-205">
+                                <h3 class="font-size-4 font-weight-bold text-black-2 mb-0">{{ job.applications.count }}</h3>
+                            </td>
+                            <td class="table-y-middle py-7 min-width-px-80">
+                                <a href="{% url 'edit_job' job.id %}" class="font-size-3 font-weight-bold text-green text-uppercase">ویرایش</a>
+                            </td>
+                            <td class="table-y-middle py-7 min-width-px-100">
+                                <a href="{% url 'delete_job' job.id %}" class="font-size-3 font-weight-bold text-red-2 text-uppercase">حذف</a>
+                            </td>
+                        </tr>
+                        {% empty %}
+                        <tr><td colspan="7">هیچ آگهی شغلی وجود ندارد.</td></tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}

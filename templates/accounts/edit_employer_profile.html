@@ -1,0 +1,118 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}ویرایش پروفایل کارفرما - جاب کمپ{% endblock %}
+{% block content %}
+<div class="container-fluid" style="direction: rtl;">
+    <div class="row">
+        <!-- سایدبار -->
+        <div class="col-lg-3 col-md-4 d-md-block d-none">
+            <div class="dashboard-sidebar-wrapper pt-11 position-sticky top-0" id="sidebar">
+                <div class="brand-logo px-11">
+                    {% if profile.logo %}
+                        <a href="{% url 'website:home' %}">
+                            <img src="{{ profile.logo.url }}" alt="{{ profile.company_name }}" class="img-fluid">
+                        </a>
+                    {% else %}
+                        <a href="{% url 'website:home' %}">
+                            <img src="{% static 'image/logo-main-black.png' %}" alt="لوگوی جاب کمپ" class="img-fluid">
+                        </a>
+                    {% endif %}
+                </div>
+                <div class="my-15 px-11">
+                    <a href="{% url 'accounts:post_job' %}" class="btn btn-primary btn-xl w-100 text-uppercase"><span class="ml-5 d-inline-block">+</span>ارسال شغل جدید</a>
+                </div>
+                <ul class="list-unstyled dashboard-layout-sidebar">
+                    <li><a href="{% url 'accounts:employer_dashboard' %}" class="px-10 py-1 my-5 font-size-4 font-weight-semibold flex-y-center"><i class="icon icon-layout-11 ml-7"></i>دشبورد</a></li>
+                    <li><a href="{% url 'accounts:employer_profile' %}" class="px-10 py-1 my-5 font-size-4 font-weight-semibold flex-y-center"><i class="icon icon-layout-11 ml-7"></i>پروفایل شرکت</a></li>
+                    <li><a href="{% url 'accounts:edit_employer_profile' %}" class="px-10 py-1 my-5 font-size-4 font-weight-semibold flex-y-center active"><i class="fas fa-cog ml-7"></i>ویرایش پروفایل</a></li>
+                </ul>
+            </div>
+        </div>
+        <!-- محتوای اصلی -->
+        <div class="col-lg-9 col-md-8">
+            <div class="bg-default-2 pt-16 pt-lg-22 pb-13 pb-lg-27">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="bg-white rounded-4 pt-11 shadow-9">
+                                <h2 class="font-size-6 mb-7 text-black-2 font-weight-semibold">تنظیمات پروفایل کارفرما</h2>
+                                <form method="post" enctype="multipart/form-data" class="p-5">
+                                    {% csrf_token %}
+                                    <div class="form-group mb-4">
+                                        <label for="{{ form.company_name.id_for_label }}">نام شرکت</label>
+                                        <input type="text" class="form-control" id="{{ form.company_name.id_for_label }}" name="{{ form.company_name.name }}" value="{{ form.company_name.value|default_if_none:'' }}" required>
+                                        {% if form.company_name.errors %}
+                                            <small class="text-danger">{{ form.company_name.errors }}</small>
+                                        {% endif %}
+                                    </div>
+                                    <div class="form-group mb-4">
+                                        <label for="{{ form.logo.id_for_label }}">لوگوی شرکت</label>
+                                        <input type="file" class="form-control" id="{{ form.logo.id_for_label }}" name="{{ form.logo.name }}" accept="image/*">
+                                        {% if form.logo.errors %}
+                                            <small class="text-danger">{{ form.logo.errors }}</small>
+                                        {% endif %}
+                                        {% if profile.logo %}
+                                            <small class="text-muted">لوگوی فعلی: <img src="{{ profile.logo.url }}" alt="لوگوی فعلی" class="square-50 mt-2"></small>
+                                        {% endif %}
+                                    </div>
+                                    <div class="form-group mb-4">
+                                        <label for="{{ form.description.id_for_label }}">توضیحات شرکت</label>
+                                        <textarea class="form-control" id="{{ form.description.id_for_label }}" name="{{ form.description.name }}" rows="4">{{ form.description.value|default_if_none:'' }}</textarea>
+                                        {% if form.description.errors %}
+                                            <small class="text-danger">{{ form.description.errors }}</small>
+                                        {% endif %}
+                                    </div>
+                                    <div class="form-group mb-4">
+                                        <label for="{{ form.company_size.id_for_label }}">اندازه شرکت</label>
+                                        <input type="text" class="form-control" id="{{ form.company_size.id_for_label }}" name="{{ form.company_size.name }}" value="{{ form.company_size.value|default_if_none:'' }}">
+                                        {% if form.company_size.errors %}
+                                            <small class="text-danger">{{ form.company_size.errors }}</small>
+                                        {% endif %}
+                                    </div>
+                                    <div class="form-group mb-4">
+                                        <label for="{{ form.founded_date.id_for_label }}">تاریخ تأسیس</label>
+                                        <input type="date" class="form-control" id="{{ form.founded_date.id_for_label }}" name="{{ form.founded_date.name }}" value="{{ form.founded_date.value|default_if_none:'' }}">
+                                        {% if form.founded_date.errors %}
+                                            <small class="text-danger">{{ form.founded_date.errors }}</small>
+                                        {% endif %}
+                                    </div>
+                                    <div class="form-group mb-4">
+                                        <label for="{{ form.company_type.id_for_label }}">نوع شرکت</label>
+                                        <input type="text" class="form-control" id="{{ form.company_type.id_for_label }}" name="{{ form.company_type.name }}" value="{{ form.company_type.value|default_if_none:'' }}">
+                                        {% if form.company_type.errors %}
+                                            <small class="text-danger">{{ form.company_type.errors }}</small>
+                                        {% endif %}
+                                    </div>
+                                    <div class="form-group mb-4">
+                                        <label for="{{ form.location.id_for_label }}">محل</label>
+                                        <input type="text" class="form-control" id="{{ form.location.id_for_label }}" name="{{ form.location.name }}" value="{{ form.location.value|default_if_none:'' }}">
+                                        {% if form.location.errors %}
+                                            <small class="text-danger">{{ form.location.errors }}</small>
+                                        {% endif %}
+                                    </div>
+                                    <div class="form-group mb-4">
+                                        <label for="{{ form.phone.id_for_label }}">تلفن</label>
+                                        <input type="text" class="form-control" id="{{ form.phone.id_for_label }}" name="{{ form.phone.name }}" value="{{ form.phone.value|default_if_none:'' }}">
+                                        {% if form.phone.errors %}
+                                            <small class="text-danger">{{ form.phone.errors }}</small>
+                                        {% endif %}
+                                    </div>
+                                    <div class="form-group mb-4">
+                                        <label for="{{ form.website.id_for_label }}">وبسایت</label>
+                                        <input type="text" class="form-control" id="{{ form.website.id_for_label }}" name="{{ form.website.name }}" value="{{ form.website.value|default_if_none:'' }}">
+                                        {% if form.website.errors %}
+                                            <small class="text-danger">{{ form.website.errors }}</small>
+                                        {% endif %}
+                                    </div>
+                                    <button type="submit" class="btn btn-primary mt-3">ذخیره</button>
+                                    <a href="{% url 'accounts:employer_profile' %}" class="btn btn-secondary mt-3">لغو</a>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

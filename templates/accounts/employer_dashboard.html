@@ -1,0 +1,144 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}داشبورد کارفرما - جاب کمپ{% endblock %}
+{% block content %}
+<div class="container-fluid" style="direction: rtl;">
+    <div class="row">
+        <!-- سایدبار -->
+        <div class="col-lg-3 col-md-4 d-md-block d-none">
+            <div class="dashboard-sidebar-wrapper pt-11 position-sticky top-0" id="sidebar">
+                <div class="brand-logo px-11">
+                    {% if profile.logo %}
+                        <a href="{% url 'website:home' %}">
+                            <img src="{{ profile.logo.url }}" alt="{{ profile.company_name }}" class="img-fluid">
+                        </a>
+                    {% else %}
+                        <a href="{% url 'website:home' %}">
+                            <img src="{% static 'image/logo-main-black.png' %}" alt="لوگوی جاب کمپ" class="img-fluid">
+                        </a>
+                    {% endif %}
+                </div>
+                <div class="my-15 px-11">
+                    <a href="{% url 'accounts:post_job' %}" class="btn btn-primary btn-xl w-100 text-uppercase"><span class="ml-5 d-inline-block">+</span>ارسال شغل جدید</a>
+                </div>
+                <ul class="list-unstyled dashboard-layout-sidebar">
+                    <li><a href="{% url 'accounts:employer_dashboard' %}" class="px-10 py-1 my-5 font-size-4 font-weight-semibold flex-y-center"><i class="icon icon-layout-11 ml-7"></i>دشبورد</a></li>
+                    <li><a href="{% url 'accounts:employer_profile' %}" class="px-10 py-1 my-5 font-size-4 font-weight-semibold flex-y-center"><i class="icon icon-layout-11 ml-7"></i>پروفایل شرکت</a></li>
+                    <li><a href="{% url 'accounts:edit_employer_profile' %}" class="px-10 py-1 my-5 font-size-4 font-weight-semibold flex-y-center"><i class="fas fa-cog ml-7"></i>ویرایش پروفایل</a></li>
+                </ul>
+            </div>
+        </div>
+        <!-- محتوای اصلی -->
+        <div class="col-lg-9 col-md-8">
+            <div class="bg-default-2 pt-16 pt-lg-22 pb-13 pb-lg-27">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="bg-white rounded-4 pt-11 shadow-9">
+                                <!-- جدول مشاغل -->
+                                <h2 class="font-size-6 mb-7 text-black-2 font-weight-semibold">مشاغل پست‌شده</h2>
+                                <div class="table-responsive">
+                                    <table class="table table-striped text-right">
+                                        <thead>
+                                            <tr>
+                                                <th scope="col">عنوان</th>
+                                                <th scope="col">مکان</th>
+                                                <th scope="col">نوع</th>
+                                                <th scope="col">وضعیت</th>
+                                                <th scope="col">اقدامات</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {% for job in jobs %}
+                                                <tr>
+                                                    <td>{{ job.title }}</td>
+                                                    <td>{{ job.location|default:"نامشخص" }}</td>
+                                                    <td>{{ job.get_job_type_display|default:"نامشخص" }}</td>
+                                                    <td>{% if job.is_active %}فعال{% else %}غیرفعال{% endif %}</td>
+                                                    <td>
+                                                        <a href="{% url 'accounts:job_detail' job.id %}" class="btn btn-primary btn-sm">مشاهده</a>
+                                                        <a href="{% url 'accounts:edit_job' job.id %}" class="btn btn-warning btn-sm">ویرایش</a>
+                                                        <a href="{% url 'accounts:delete_job' job.id %}" class="btn btn-danger btn-sm">حذف</a>
+                                                    </td>
+                                                </tr>
+                                            {% empty %}
+                                                <tr><td colspan="5">هیچ شغلی پست نشده است.</td></tr>
+                                            {% endfor %}
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <!-- جدول درخواست‌ها -->
+                                <h2 class="font-size-6 mb-7 text-black-2 font-weight-semibold">درخواست‌ها</h2>
+                                <div class="table-responsive">
+                                    <table class="table table-striped text-right">
+                                        <thead>
+                                            <tr>
+                                                <th scope="col">متقاضی</th>
+                                                <th scope="col">شغل</th>
+                                                <th scope="col">وضعیت</th>
+                                                <th scope="col">اقدامات</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {% for application in applications %}
+                                                <tr>
+                                                    <td>{{ application.applicant.username }}</td>
+                                                    <td>{{ application.job.title }}</td>
+                                                    <td>{{ application.get_status_display }}</td>
+                                                    <td>
+                                                        <a href="{% url 'accounts:applicant_profile' application.id %}" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#profileModal{{ application.id }}">مشاهده رزومه</a>
+                                                        <a href="{% url 'accounts:reject_application' application.id %}" class="btn btn-danger btn-sm">رد کردن</a>
+                                                    </td>
+                                                </tr>
+                                            {% empty %}
+                                                <tr><td colspan="4">هیچ درخواستی وجود ندارد.</td></tr>
+                                            {% endfor %}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- مودال پروفایل متقاضی -->
+            {% for application in applications %}
+                <div class="modal fade" id="profileModal{{ application.id }}" tabindex="-1" aria-labelledby="profileModalLabel{{ application.id }}" aria-hidden="true">
+                    <div class="modal-dialog modal-lg">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="profileModalLabel{{ application.id }}">پروفایل متقاضی: {{ application.applicant.username }}</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body text-right">
+                                <p><strong>نام کاربری:</strong> {{ application.applicant.username }}</p>
+                                <p><strong>بیوگرافی:</strong> {{ application.applicant.profile.bio|default:"بدون بیوگرافی" }}</p>
+                                <p><strong>مهارت‌ها:</strong>
+                                    {% for skill in application.applicant.profile.get_skills_list %}
+                                        {{ skill }}{% if not forloop.last %}, {% endif %}
+                                    {% empty %}
+                                        بدون مهارت
+                                    {% endfor %}
+                                </p>
+                                <p><strong>تجربه کاری:</strong>
+                                    {% for experience in application.applicant.profile.experiences.all %}
+                                        {{ experience.title }} - {{ experience.company|default:"نامشخص" }} ({{ experience.start_date|date:"Y" }} - {{ experience.end_date|date:"Y"|default:"تاکنون" }})
+                                        <br>
+                                    {% empty %}
+                                        بدون تجربه کاری
+                                    {% endfor %}
+                                </p>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">بستن</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock %}
